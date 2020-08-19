@@ -27,9 +27,7 @@ public class Exercise {
     private List<Muscle> targetedMuscles = new ArrayList<>();
 
     public void addTargetedMuscle(Muscle muscle) {
-        System.out.println(muscle);
         this.targetedMuscles.add(muscle);
-        System.out.println(this.targetedMuscles);
     }
 
     public enum Difficulty {

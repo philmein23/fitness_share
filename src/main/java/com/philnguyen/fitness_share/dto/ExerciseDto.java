@@ -7,6 +7,9 @@ import java.util.List;
 
 @Data
 public class ExerciseDto {
+
+    @JsonProperty("exercise_id")
+    private Long exerciseId;
     @JsonProperty("exercise_name")
     private String exerciseName;
     @JsonProperty("targeted_muscles")

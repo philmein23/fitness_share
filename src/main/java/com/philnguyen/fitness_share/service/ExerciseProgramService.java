@@ -10,6 +10,7 @@ import com.philnguyen.fitness_share.repository.ExerciseProgramRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -52,12 +53,66 @@ public class ExerciseProgramService {
                                 Muscle m = new Muscle();
                                 m.setMuscleName(muscleDto.getMuscleName());
                                 e.addTargetedMuscle(m);
-                                System.out.print(e);
                             });
 
                     newExerciseProgram.addExercise(e);
                 });
 
         return exerciseProgramRepository.save(newExerciseProgram);
+    }
+
+    @Transactional
+    public ExerciseProgram updateExerciseProgram(ExerciseProgramDto exerciseProgramDto, Long programId) {
+        return exerciseProgramRepository
+                .findById(programId)
+                .map(program -> {
+                    program.setProgramName(exerciseProgramDto.getProgramName());
+
+                    List<ExerciseDto> exerciseDtos = exerciseProgramDto
+                            .getExercises()
+                            .stream()
+                            .collect(Collectors.toList());
+                    HashSet<MuscleDto> muscleDtos = new HashSet<>();
+
+                    exerciseDtos
+                            .forEach(exerciseDto -> {
+                                muscleDtos.addAll(exerciseDto
+                                        .getTargetedMuscles());
+                            });
+                    program
+                            .getExercises()
+                            .forEach(exercise -> {
+                                for (ExerciseDto e : exerciseDtos) {
+                                    if (exercise
+                                            .getExerciseId()
+                                            .equals(e.getExerciseId())) {
+                                        exercise.setExerciseName(e.getExerciseName());
+                                        exercise.setDescription(e.getDescription());
+                                        exercise.setDifficulty(e.getDifficulty());
+                                    }
+                                }
+                                exercise
+                                        .getTargetedMuscles()
+                                        .forEach(muscle -> {
+                                            for (MuscleDto m : muscleDtos) {
+                                                if (muscle
+                                                        .getMuscleId()
+                                                        .equals(m.getMuscleId())) {
+                                                    muscle.setMuscleName(m.getMuscleName());
+                                                }
+                                            }
+                                        });
+
+                            });
+
+
+                    return exerciseProgramRepository.save(program);
+                })
+                .orElse(null);
+    }
+
+    @Transactional
+    public void deleteExerciseProgram(Long programId) {
+        exerciseProgramRepository.deleteById(programId);
     }
 }
