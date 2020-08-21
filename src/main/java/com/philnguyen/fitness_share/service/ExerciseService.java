@@ -24,7 +24,7 @@ public class ExerciseService {
     }
 
     @Transactional
-    public Exercise addNewExercise(String exerciseName, String description, Integer difficulty) {
+    public Exercise addNewExercise(String exerciseName, String description, String difficulty) {
         Exercise exercise = new Exercise();
         exercise.setExerciseName(exerciseName);
         exercise.setDescription(description);

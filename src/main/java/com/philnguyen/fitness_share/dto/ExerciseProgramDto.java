@@ -1,7 +1,6 @@
 package com.philnguyen.fitness_share.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.philnguyen.fitness_share.model.Exercise;
 import lombok.Data;
 
 import java.util.List;

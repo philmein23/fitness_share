@@ -19,6 +19,7 @@ class FitnessShareApplicationTests {
     @Autowired
     private ExerciseProgramRepository exerciseProgramRepository;
 
+
     @Test
     void contextLoads() {
         List<Exercise> exercises = new ArrayList<>();
@@ -27,8 +28,8 @@ class FitnessShareApplicationTests {
         muscles.add(new Muscle(null, "triceps"));
         muscles2.add(new Muscle(null, "latissimus dorsi"));
         muscles2.add(new Muscle(null, "biceps"));
-        Exercise e1 = new Exercise(null, "dips", "test", 7, muscles);
-        Exercise e2 = new Exercise(null, "wide grip pull ups", "test", 7, muscles2);
+        Exercise e1 = new Exercise(null, "dips", "test", "HARD", muscles);
+        Exercise e2 = new Exercise(null, "wide grip pull ups", "test", "HARD", muscles2);
 
 
         exercises.add(e1);

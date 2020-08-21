@@ -16,13 +16,11 @@ public class Exercise {
 
     @Id
     private Long exerciseId;
-
     @JsonProperty("exercise_name")
     private String exerciseName;
-
     private String description;
-    private Integer difficulty;
 
+    private String difficulty;
     @JsonProperty("targeted_muscles")
     private List<Muscle> targetedMuscles = new ArrayList<>();
 

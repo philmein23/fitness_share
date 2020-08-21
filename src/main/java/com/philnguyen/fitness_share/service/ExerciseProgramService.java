@@ -43,6 +43,7 @@ public class ExerciseProgramService {
                 .forEach((ExerciseDto exerciseDto) -> {
                     Exercise e = new Exercise();
                     e.setExerciseName(exerciseDto.getExerciseName());
+                    System.out.println(exerciseDto.getDifficulty());
                     e.setDifficulty(exerciseDto.getDifficulty());
                     e.setDescription(exerciseDto.getDescription());
 

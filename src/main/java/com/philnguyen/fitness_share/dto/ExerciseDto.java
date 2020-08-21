@@ -1,6 +1,7 @@
 package com.philnguyen.fitness_share.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.philnguyen.fitness_share.model.Exercise;
 import lombok.Data;
 
 import java.util.List;
@@ -15,5 +16,5 @@ public class ExerciseDto {
     @JsonProperty("targeted_muscles")
     private List<MuscleDto> targetedMuscles;
     private String description;
-    private Integer difficulty;
+    private String difficulty;
 }
