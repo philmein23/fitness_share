@@ -1,7 +1,7 @@
 drop table if exists muscle;
 drop table if exists exercise;
 drop table if exists exercise_program;
-drop table if exists users;
+
 
 -- create type difficulty_rating as enum('EASY', 'MODERATE', 'HARD');
 
@@ -33,7 +33,7 @@ create table if not exists users
     user_id SERIAL primary key,
     first_name varchar(50),
     last_name varchar(50),
-    username varchar(255) unique,
+    user_name varchar(255) unique,
     email varchar(255),
     password varchar(255)
 );

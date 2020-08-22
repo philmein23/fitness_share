@@ -6,7 +6,6 @@ import com.philnguyen.fitness_share.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -21,6 +20,12 @@ public class RegistrationController {
 
     @PostMapping("/register")
     public User processRegistration(@RequestBody UserDto newUserRegistration) {
-       return userRepository.save(newUserRegistration.toUser(passwordEncoder));
+        User newUser = new User();
+        newUser.setFirstName(newUserRegistration.getFirstName());
+        newUser.setLastName(newUserRegistration.getLastName());
+        newUser.setUserName(newUserRegistration.getUserName());
+        newUser.setPassword(passwordEncoder.encode(newUserRegistration.getPassword()));
+        newUser.setEmail(newUserRegistration.getEmail());
+       return userRepository.save(newUser);
     }
 }

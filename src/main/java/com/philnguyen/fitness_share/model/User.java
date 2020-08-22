@@ -1,56 +1,25 @@
 package com.philnguyen.fitness_share.model;
 
-import lombok.AccessLevel;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Arrays;
-import java.util.Collection;
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-@RequiredArgsConstructor()
 @Table("users")
-public class User implements UserDetails {
-    private static final long serialVersionUID = 1L;
-
+public class User {
     @Id
     private Long user_id;
 
-    private final String first_name;
-    private final String last_name;
-    private final String username;
-    private final String password;
-    private final String email;
+    @JsonProperty("first_name")
+    private String firstName;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"), new SimpleGrantedAuthority("ADMIN"));
-    }
+    @JsonProperty("last_name")
+    private String lastName;
 
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    @JsonProperty("user_name")
+    private String userName;
 
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
+    private String password;
+    private String email;
 }

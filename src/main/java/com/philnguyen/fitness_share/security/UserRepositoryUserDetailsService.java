@@ -1,5 +1,6 @@
 package com.philnguyen.fitness_share.security;
 
+import com.philnguyen.fitness_share.model.MyUserDetails;
 import com.philnguyen.fitness_share.model.User;
 import com.philnguyen.fitness_share.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,11 +17,17 @@ public class UserRepositoryUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username)  throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username);
-        if (user != null) {
-            return user;
-        }
-        throw new UsernameNotFoundException("User " + username + " not found");
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository
+                .findByUsername(username)
+                .map(user -> {
+                    MyUserDetails userDetails = new MyUserDetails();
+                    userDetails.setUsername(user.getUserName());
+                    userDetails.setPassword(user.getPassword());
+
+                    return userDetails;
+                })
+                .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
+
     }
 }
