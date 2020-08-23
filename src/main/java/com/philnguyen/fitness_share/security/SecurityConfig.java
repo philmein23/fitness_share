@@ -1,23 +1,27 @@
 package com.philnguyen.fitness_share.security;
 
+import com.philnguyen.fitness_share.filters.JwtRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserRepositoryUserDetailsService userRepositoryUserDetailsService;
+    private JwtRequestFilter jwtRequestFilter;
 
-    public SecurityConfig(UserRepositoryUserDetailsService userRepositoryUserDetailsService) {
+    public SecurityConfig(UserRepositoryUserDetailsService userRepositoryUserDetailsService, JwtRequestFilter jwtRequestFilter) {
         this.userRepositoryUserDetailsService = userRepositoryUserDetailsService;
+        this.jwtRequestFilter = jwtRequestFilter;
     }
 
     @Override
@@ -41,7 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/**")
                 .access("permitAll")
                 .and()
-                .httpBasic();
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

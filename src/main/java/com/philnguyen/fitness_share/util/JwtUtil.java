@@ -2,8 +2,9 @@ package com.philnguyen.fitness_share.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,9 @@ import java.util.function.Function;
 
 @Service
 public class JwtUtil {
-    public JwtUtil() {
-    }
 
-    private String SECRET_KEY = "secret";
+    @Value("${jwt.secret.key}")
+    private String SECRET_KEY;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -52,7 +52,7 @@ public class JwtUtil {
     }
 
     private String createTokens(Map<String, Object> claims, String subject) {
-        SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(SECRET_KEY));
         return Jwts
                 .builder()
                 .setClaims(claims)
