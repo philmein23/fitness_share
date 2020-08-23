@@ -28,15 +28,6 @@ public class AuthenticationController {
         this.jwtUtil = jwtUtil;
     }
 
-    public AuthenticationController(AuthenticationManager authenticationManager, UserRepositoryUserDetailsService userRepositoryUserDetailsService) {
-        this.authenticationManager = authenticationManager;
-        this.userRepositoryUserDetailsService = userRepositoryUserDetailsService;
-    }
-
-    public AuthenticationController(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
-    }
-
     @PostMapping("/authenticate")
     public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequestDto authenticationRequestDto) throws  Exception {
 
