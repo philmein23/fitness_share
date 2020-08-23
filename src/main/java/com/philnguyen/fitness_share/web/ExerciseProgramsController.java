@@ -22,7 +22,6 @@ public class ExerciseProgramsController {
 
     @GetMapping("/programs")
     public List<ExerciseProgram> findAllExercisePrograms() {
-        System.out.println("GET - PROGRAMS");
         return exerciseProgramService.findAllExercisePrograms();
     }
 

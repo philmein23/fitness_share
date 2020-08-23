@@ -1,7 +1,6 @@
 package com.philnguyen.fitness_share.security;
 
 import com.philnguyen.fitness_share.model.MyUserDetails;
-import com.philnguyen.fitness_share.model.User;
 import com.philnguyen.fitness_share.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

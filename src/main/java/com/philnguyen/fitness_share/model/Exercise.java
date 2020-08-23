@@ -32,4 +32,5 @@ public class Exercise {
         EASY, MODERATE, HARD
     }
 
+
 }
